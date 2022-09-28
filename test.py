@@ -1,34 +1,35 @@
+import math
 import unittest
 import triangle
 
-class TestTriangle(unittest.TestCase):
-    def test_classify_Scalene(self):
-        a = 3
-        b = 4
-        c = 5
-        self.assertEqual(triangle.classify(a, b, c), 'scalene')
 
+class TestTriangle(unittest.TestCase):
+    def test_classify_ScaleneAndRight(self):
+        self.assertEqual(triangle.classify(3, 4, 5), 'scalene')
+        self.assertEqual(triangle.ifright(3, 4, 5), 'Right')
+
+    def test_classify_ScaleneButNotRight(self):
+        self.assertEqual(triangle.classify(3, 4, 6), 'scalene')
+        self.assertEqual(triangle.ifright(3, 4, 6), 'Not Right')
 
     def test_classify_isosceles(self):
-        a = 3
-        b = 3
-        c = 4
-        self.assertEqual(triangle.classify(a, b, c), 'isosceles')
+        self.assertEqual(triangle.classify(3, 3, 4), 'isosceles')
+        self.assertEqual(triangle.ifright(3, 3, 4), 'Not Right')
 
+    def test_classify_isoscelesAndRight(self):
+        self.assertEqual(triangle.classify(2, 2, (2* (math.sqrt(2)))), 'isosceles')
+        self.assertEqual(triangle.ifright(2, 2, (2* (math.sqrt(2)))), 'Right')
 
     def test_classify_Equilateral(self):
-        a = 3
-        b = 3
-        c = 3
-        self.assertEqual(triangle.classify(a, b, c), 'Equilateral')
+        self.assertEqual(triangle.classify(3, 3, 3), 'Equilateral')
+        self.assertEqual(triangle.ifright(3, 3, 3), 'Not Right')
+        # Equilateral Triangles are impossible to be right triangles #
 
-    def test_classify_none(self):
-        a = 1
-        b = 2
-        c = 5
-        self.assertEqual(triangle.classify(a, b, c), 'none')
 
+
+    def test_classify_invalid(self):
+        self.assertEqual(triangle.classify(1, 2, 5), 'invalid')
 
 
 if __name__ == "__main__":
-        unittest.main()
+    unittest.main()
